@@ -1,0 +1,5 @@
+(test
+ (name parse_test)
+ (package vhd-format-unix)
+ (libraries cstruct disk io-page.unix lwt lwt.unix oUnit vhd-format
+   vhd_format_unix))

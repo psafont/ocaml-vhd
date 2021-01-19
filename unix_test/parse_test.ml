@@ -14,11 +14,11 @@
 open OUnit
 
 open Vhd_format.Patterns
-module Impl = Vhd_format.F.From_file(Vhd_format_lwt.IO)
+module Impl = Vhd_format.F.From_file(Vhd_format_unix.IO)
 open Impl
 open Vhd_format.F
-open Vhd_format_lwt.IO
-open Vhd_format_lwt.Patterns_lwt
+open Vhd_format_unix.IO
+open Vhd_format_unix.Patterns_lwt
 
 let cstruct_to_string c = String.escaped (Cstruct.to_string c)
 
@@ -227,7 +227,7 @@ module In = From_input(Input)
 open In
 
 let stream_vhd filename =
-  Vhd_format_lwt.IO.openfile filename false >>= fun fd ->
+  Vhd_format_unix.IO.openfile filename false >>= fun fd ->
   let rec loop = function
     | End -> return ()
     | Cons (_hd, tl) ->
@@ -245,10 +245,10 @@ let stream_vhd filename =
 	end;*)
       tl () >>= fun x ->
       loop x in
-  Vhd_format_lwt.IO.get_file_size filename >>= fun size ->
+  Vhd_format_unix.IO.get_file_size filename >>= fun size ->
   openstream (Some size)
-    (Input.of_fd (Vhd_format_lwt.IO.to_file_descr fd)) >>= fun stream ->
-  loop stream >>= fun () -> Vhd_format_lwt.IO.close fd
+    (Input.of_fd (Vhd_format_unix.IO.to_file_descr fd)) >>= fun stream ->
+  loop stream >>= fun () -> Vhd_format_unix.IO.close fd
 
 let stream_test state =
   Lwt_list.iter_s stream_vhd state.to_unlink

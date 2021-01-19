@@ -1,5 +1,5 @@
 (executable
  (name disk_to_ocaml)
  (public_name disk_to_ocaml)
- (package vhd-format-lwt)
+ (package vhd-format-unix)
  (libraries disk lwt))
