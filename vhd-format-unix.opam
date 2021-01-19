@@ -12,7 +12,7 @@ depends: [
   "mirage-block"
   "mirage-types-lwt" {>= "3.0.0"}
   "ounit"
-  "vhd-format"
+  "vhd-format" {=version}
   "io-page-unix" {with-test}
   "dune" {>= "1.0"}
 ]
